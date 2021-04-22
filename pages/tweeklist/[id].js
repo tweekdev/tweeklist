@@ -14,10 +14,22 @@ export const getStaticPaths = async () => {
   };
 };
 
-const Details = () => {
+export const getStaticProps = async (context) => {
+  const id = context.params.id;
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+  const data = await res.json();
+
+  return { props: { tweek: data } };
+};
+
+const Details = ({ tweek }) => {
   return (
     <div>
-      <h1>Details Page</h1>
+      <h1>{tweek.name}</h1>
+      <p>{tweek.email}</p>
+      <p>{tweek.website}</p>
+      <p>{tweek.address.city}</p>
+      <p>{tweek.phone}</p>
     </div>
   );
 };
